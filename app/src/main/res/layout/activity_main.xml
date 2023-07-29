@@ -14,22 +14,19 @@
         android:layout_width="250dp"
         android:layout_height="75dp"
         android:layout_marginTop="20dp"
-        android:text="Button"
-        tools:text="ADDITION" />
+        android:text="ADDITION" />
 
     <Button
         android:id="@+id/buttonSub"
         android:layout_width="250dp"
         android:layout_height="75dp"
         android:layout_marginTop="20dp"
-        android:text="Button"
-        tools:text="SUBTRACTION" />
+        android:text="SUBTRACTION" />
 
     <Button
         android:id="@+id/buttonMulti"
         android:layout_width="250dp"
         android:layout_height="75dp"
         android:layout_marginTop="20dp"
-        android:text="Button"
-        tools:text="MULTIPLICATION" />
+        android:text="MULTIPLICATION" />
 </LinearLayout>
