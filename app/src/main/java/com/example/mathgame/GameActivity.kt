@@ -30,11 +30,14 @@ class GameActivity : AppCompatActivity() {
     lateinit var timer: CountDownTimer
     private  val startTimerInMillis : Long = 60000
     var timeLeftInMillis : Long = startTimerInMillis
+     lateinit var title : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        //supportActionBar!!.title = "Addition"
+        var okClicks = 0
+        title = intent.getStringExtra("title").toString()
+        supportActionBar!!.title = title
         textScore = findViewById(R.id.textViewScore)
         textLife = findViewById(R.id.textViewLife)
         textTime = findViewById(R.id.textViewTime)
@@ -51,7 +54,11 @@ class GameActivity : AppCompatActivity() {
 
             pauseTimer()
 
-            if(input == "")
+            if (okClicks >= 1)
+            {
+                Toast.makeText(applicationContext,"Please click the next button to view the next question",Toast.LENGTH_LONG).show()
+            }
+            else if(input == "")
             {
                 Toast.makeText(applicationContext,"Please write an answer or click the next button",Toast.LENGTH_LONG).show()
             }
@@ -71,12 +78,14 @@ class GameActivity : AppCompatActivity() {
                     textQuestion.text = "Sorry, your answer is wrong"
                     textLife.text = userLife.toString()
                 }
+                okClicks += 1
                 moveToResultPage()
 
             }
         }
 
         buttonNext.setOnClickListener {
+           okClicks = 0
             pauseTimer()
             resetTimer()
             moveToResultPage()
@@ -97,10 +106,7 @@ class GameActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        else
-        {
-            gameContinue()
-        }
+
 
     }
     fun gameContinue()
@@ -108,9 +114,18 @@ class GameActivity : AppCompatActivity() {
         val num1 = Random.nextInt(0,100)
         val num2 = Random.nextInt(0,100)
 
-        textQuestion.text = "$num1 + $num2"
-
-        correctAnswer =  num1 + num2
+        if (title == "Addition") {
+            textQuestion.text = "$num1 + $num2"
+            correctAnswer = num1 + num2
+        }
+        else if (title == "Subtraction") {
+            textQuestion.text = "$num1 - $num2"
+            correctAnswer = num1 - num2
+        }
+        else if (title == "Multiplication") {
+                textQuestion.text = "$num1 * $num2"
+                correctAnswer = num1 * num2
+            }
 
         startTimer()
     }
