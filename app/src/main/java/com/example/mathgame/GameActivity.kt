@@ -1,5 +1,6 @@
 package com.example.mathgame
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -70,6 +71,7 @@ class GameActivity : AppCompatActivity() {
                     textQuestion.text = "Sorry, your answer is wrong"
                     textLife.text = userLife.toString()
                 }
+                moveToResultPage()
 
             }
         }
@@ -77,14 +79,30 @@ class GameActivity : AppCompatActivity() {
         buttonNext.setOnClickListener {
             pauseTimer()
             resetTimer()
+            moveToResultPage()
             gameContinue()
             editTextAnswer.setText("")
+
+
         }
-
-
 
     }
 
+    fun moveToResultPage()
+    {   if (userLife <= 0)
+        {
+            Toast.makeText(applicationContext,"Game Over",Toast.LENGTH_LONG).show()
+            val intent = Intent(this@GameActivity,ResultActivity::class.java)
+            intent.putExtra("score",userScore)
+            startActivity(intent)
+            finish()
+        }
+        else
+        {
+            gameContinue()
+        }
+
+    }
     fun gameContinue()
     {
         val num1 = Random.nextInt(0,100)
@@ -96,6 +114,8 @@ class GameActivity : AppCompatActivity() {
 
         startTimer()
     }
+
+
 
     fun startTimer()
     {
